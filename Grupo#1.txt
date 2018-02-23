@@ -6,3 +6,4 @@ Nombres:
 Usuario Git (Ingrid): dominguezi10
 Usuario Git (Claudia): hikarisaotom
 Repositorio: https://github.com/dominguezi10/Grupo-1
+

@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include "Serpiente.h"
 #include <string>
 using namespace std;
 /*DEL EJEMPLO CON INPUT*/
@@ -15,10 +16,11 @@ int yMax,xMax;
 getmaxyx(stdscr,yMax,xMax);
 WINDOW * puntuacion=newwin(6,xMax-12,yMax-8,5);
 WINDOW * tablero=newwin(6,xMax-12,yMax-8,5);
-box(menu,0,0);
+box(puntuacion,0,0);
+box(tablero,0,0);
 refresh();
-wrefresh(menu);
-keypad(menu,true);
+wrefresh(tablero);
+keypad(tablero,true);
 string opciones[5]={"1-","2-","3-","4-","5-"};
 int subrayar=0;
 int Resp;
@@ -29,7 +31,7 @@ while(true){
 		Resp=getch();
 		if (!(Resp!='w'&&Resp!='a'&&Resp!='s'&&Resp!='d')){	
 			switch(Resp){
-				case :{
+				case KEY_UP:{
 					subrayar--;
 					if(subrayar==-1){
 						subrayar=0;
