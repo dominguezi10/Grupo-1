@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include<unistd.h>
 #include <sstream>
-
+#include <vector>
 using namespace std;
 
 //prototipo 
@@ -35,9 +35,10 @@ void llenar(string**&,int , int );
 void strat_ncurses(bool useRaw,bool usenoECho);
 void printMenu(WINDOW * menu,string choices[],int size,int highlight);
 //headers de los metodos.
-void imprimirmenu(string,int);
+void imprimirmenu(string,int,string);
 int movimientos(int,int);
 int main(int argc,char** argv){
+	Serpiente * snake;
 	string** matriz;
 	int condicion = 0;
 	int puntoX = 0;
@@ -69,9 +70,10 @@ int main(int argc,char** argv){
 	string Nombre;
 	int yMax,xMax;
 	getmaxyx(stdscr,yMax,xMax);
-	mvprintw(0,0,"BIENVENIDO: POrfavor ingrese su nombre.");
+	mvprintw(0,0,"BIENVENIDO: Porfavor ingrese su nombre.");
 	char ch = getch();
 	stringstream ss;
+	
 	    while ( ch != '\n' ){
 		Nombre.push_back( ch );
 		ss<<ch;
@@ -85,30 +87,35 @@ int main(int argc,char** argv){
 	int m_viejo=0;
 	int mov_actual=0;
 	int movimiento=0;
-	imprimirmenu(Nombre,movimiento);
+	//snake= new Serpiente(Nombre,0,movimientos,0);
+	snake= new Serpiente();
+	vector <string> gusano;
+		for (int i=0;i<5;i++){
+			gusano.push_back("G");		
+		}
+	imprimirmenu(Nombre,movimiento,tablero);
 	while(true){
 		Resp=getch();
 		clear();
 		//imprimirMenu();
 		if (Resp==10){//10 es el codigo ascii del enter.
-			
+			clear();
 			mvprintw(0,0,"ingrese movimiento.");
-			
-			imprimirmenu(Nombre,movimiento);
 			Resp=getch();
+			imprimirmenu(Nombre,movimiento,tablero);
 			//Resp=getch();
 			m_viejo=mov_actual;
 			mov_actual=movimientos(movimiento,Resp);
 			if(mov_actual==-1){
 				mov_actual=m_viejo;
-			//sleep(5);//tarda 5 segs en seguir
+			
 			}else{
 				movimiento++;
 		}
 			
 			//movimiento=movimientos(movimiento,Resp);
 		}else{
-			imprimirmenu(Nombre,movimiento);
+			imprimirmenu(Nombre,movimiento,tablero);
 		}
 	}//Fin del while
 	getch();
@@ -119,7 +126,7 @@ int main(int argc,char** argv){
 	return 0;
 }//Fin del main,
 
-void imprimirmenu(string nombre, int movimiento){
+void imprimirmenu(string nombre, int movimiento,string snake){
 	initscr();
 	noecho();
 	cbreak();
@@ -135,6 +142,7 @@ void imprimirmenu(string nombre, int movimiento){
 	mvwprintw(tablero,2,1,nombre.c_str());
 	//mvwprintw(tablero,2,10,nombre);
 	mvwprintw(tablero,3,3,"MOVIMIENTOS");
+	mvwprintw(puntuacion,1,1,snake.c_str());
 	//mvwprintw(tablero,3,10,"%",c);
 	mvwprintw(tablero,4,1,mvs.c_str());
 	wrefresh(tablero);
@@ -145,11 +153,37 @@ void imprimirmenu(string nombre, int movimiento){
 	wrefresh(tablero);
 	wrefresh(puntuacion);
 }
-<<<<<<< HEAD
-int movimientos(int m,int Resp){
-=======
 
-//-------------------------------
+int movimientos(int m,int Resp){
+	switch(Resp){
+		case 'w':{
+			mvprintw(0,0,"A");
+			return 1;
+			break;
+			}
+		case 's':{
+			mvprintw(0,0,"Ab");
+			return 2;
+			break;
+			}
+		case 'a':{
+			mvprintw(0,0,"IZ");
+			return 3;			
+			break;
+			}
+		case 'd':{
+			mvprintw(0,0,"DE");
+			return 4;
+			break;
+			}
+		default:{
+			mvprintw(0,0,"INV");
+			return -1;
+			break;
+			}
+	}
+
+}
 
 int posicionesPuntoRojo(){
 	int posicion = 0;
