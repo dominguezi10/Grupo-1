@@ -1,0 +1,8 @@
+Nombres:
+	Ingrid Lizeth Dominguez Mendez
+	Claudia Patricia Cortes Pavon
+#Cuenta Ingrid:11711355
+#Cuenta Claudia: 11711357
+Usuario Git (Ingrid): dominguezi10
+Usuario Git (Claudia): hikarisaotom
+Repositorio: https://github.com/hikarisaotom/P3Examen-1_ClaudiaCortes_IngridDominguez
