@@ -1,64 +1,84 @@
 #include <ncurses.h>
 #include "Serpiente.h"
 #include <string>
+#include <string>
+#include <cstdlib>
+#include <pthread.h>
+#include<unistd.h>
 using namespace std;
 /*DEL EJEMPLO CON INPUT*/
 void strat_ncurses(bool useRaw,bool usenoECho);
 void printMenu(WINDOW * menu,string choices[],int size,int highlight);
+//headers de los metodos.
+void imprimirmenu();
 int main(int argc,char** argv){
+	initscr();
+	cbreak();
+	string Nombre;
+	int yMax,xMax;
+	getmaxyx(stdscr,yMax,xMax);
+	mvprintw(0,0,"BIENVENIDO: POrfavor ingrese su nombre.");
+	int ch = getch();
 
-
-initscr();
-noecho();
-cbreak();
-
-int yMax,xMax;
-getmaxyx(stdscr,yMax,xMax);
-WINDOW * puntuacion=newwin(6,xMax-12,yMax-8,5);
-WINDOW * tablero=newwin(6,xMax-12,yMax-8,5);
-box(puntuacion,0,0);
-box(tablero,0,0);
-refresh();
-wrefresh(tablero);
-keypad(tablero,true);
-string opciones[5]={"1-","2-","3-","4-","5-"};
-int subrayar=0;
-int Resp;
-while(true){
-	Resp=getch();
-	if (Resp==10){//10 es el codigo ascii del enter.
-		printw("PUEDE REALIZAR SU MOVIMIENTO.");
-		Resp=getch();
-		if (!(Resp!='w'&&Resp!='a'&&Resp!='s'&&Resp!='d')){	
-			switch(Resp){
-				case KEY_UP:{
-					subrayar--;
-					if(subrayar==-1){
-						subrayar=0;
-					}
-					break;
-					    }
-				case KEY_DOWN:{
-					subrayar++;
-					if(subrayar==5){
-						subrayar=4;
-					}
-					break;
-					      }
-				default:
-		
-					break;
-			}//Fin del switch
-
-		}
-		
-	}else{//NO presiono enter
-		printw("Tecla INVALIDA.");
-	}
+	    while ( ch != '\n' ){
+		Nombre.push_back( ch );
+		ch = getch();
+	    }
+	noecho();
 	
-}//Fin del while
-	printw("Tu eleccion fue: %s",opciones[subrayar].c_str());
+	clear();
+	int Resp;
+	imprimirmenu();
+	int movimiento;
+	while(true){
+		Resp=getch();
+		clear();
+		//imprimirMenu();
+		if (Resp==10){//10 es el codigo ascii del enter.
+			mvprintw(0,0,"ingrese movimiento.");
+			Resp=getch();
+			clear();
+			imprimirmenu();
+		}else{
+			imprimirmenu();
+		}
+	}//Fin del while
 	getch();
 	endwin();
 	return 0;
+}//Fin del main,
+
+void imprimirmenu(){
+	initscr();
+	noecho();
+	cbreak();
+	//double movimiento=Movimiento;
+	int yMax,xMax;
+	getmaxyx(stdscr,yMax,xMax);
+	WINDOW * puntuacion=newwin(35,xMax-50,0,50);
+	WINDOW * tablero=newwin(35,xMax-12,0,5);
+	mvwprintw(tablero,1,1,"JUAGADOR");
+	wrefresh(tablero);
+	mvwprintw(tablero,2,2,"Puntos");
+	wrefresh(tablero);
+	box(puntuacion,0,0);
+	box(tablero,0,0);
+	refresh();
+	wrefresh(tablero);
+	wrefresh(puntuacion);
 }
+
+
+/*WINDOW * puntuacion=newwin(35,xMax-50,0,50);
+	WINDOW * tablero=newwin(35,xMax-12,0,5);
+	box(puntuacion,0,0);
+	box(tablero,0,0);
+	refresh();
+	wrefresh(tablero);
+	wrefresh(puntuacion);
+	keypad(tablero,true);
+	string opciones[5]={"1-","2-","3-","4-","5-"};
+	int subrayar=0;*/
+
+
+
