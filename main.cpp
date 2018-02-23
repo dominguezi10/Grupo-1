@@ -13,6 +13,7 @@ void strat_ncurses(bool useRaw,bool usenoECho);
 void printMenu(WINDOW * menu,string choices[],int size,int highlight);
 //headers de los metodos.
 void imprimirmenu(string);
+//int movimientos(int,int);
 int main(int argc,char** argv){
 	initscr();
 	cbreak();
@@ -25,12 +26,12 @@ int main(int argc,char** argv){
 	    while ( ch != '\n' ){
 		Nombre.push_back( ch );
 		ss<<ch;
-
 		ch = getch();
 	    }
 	move(1,0);
-	printw("%s", ss.str());
-	getch();
+	//addstr(ss.str());
+	//printw(Nombre.c_str());
+	//getch();
 	noecho();
 	
 	clear();
@@ -46,6 +47,8 @@ int main(int argc,char** argv){
 			Resp=getch();
 			clear();
 			imprimirmenu(Nombre);
+			Resp=getch();
+			//movimiento=movimientos(movimiento,Resp);
 		}else{
 			imprimirmenu(Nombre);
 		}
@@ -66,7 +69,7 @@ void imprimirmenu(string nombre){
 	WINDOW * puntuacion=newwin(35,xMax-50,0,50);
 	WINDOW * tablero=newwin(35,xMax-12,0,5);
 	mvwprintw(tablero,1,1,"JUAGADOR");
-
+	mvwprintw(tablero,2,1,nombre.c_str());
 	printw("%c", nombre);
 	//mvwprintw(tablero,2,10,nombre);
 	mvwprintw(tablero,3,3,"Puntos");
@@ -81,7 +84,23 @@ void imprimirmenu(string nombre){
 	wrefresh(tablero);
 	wrefresh(puntuacion);
 }
+/*movimientos(int m,int Resp){
+	switch(Resp){
+		case 'w':{
+			break;
+			}
+		case 's':{
+			break;
+			}
+		case 'd':{
+			break;
+			}
+		case 'a':{
+			break;
+			}
+	}
 
+}*/
 
 /*WINDOW * puntuacion=newwin(35,xMax-50,0,50);
 	WINDOW * tablero=newwin(35,xMax-12,0,5);
