@@ -100,7 +100,28 @@ int main(int argc,char** argv){
 		clear();
 		//imprimirMenu();
 		if (Resp==10){//10 es el codigo ascii del enter.
-			clear();
+			   int i;
+
+			    initscr();
+
+			    curs_set(0);
+
+			    for (i = 40; i <= 80; i++)
+			    {
+				mvaddch(10, i, ' ');
+				refresh();
+				mvaddch(10, i+1, 'G');
+				refresh();
+				napms(100);
+			    }
+
+			    curs_set(1);
+			    mvaddstr(0, 0, "OH NO PERDIO :C SORRY HERBERT....");
+			    refresh();
+			    getch();
+
+			    endwin();
+						clear();
 			mvprintw(0,0,"ingrese movimiento.");
 			Resp=getch();
 			imprimirmenu(Nombre,movimiento,tablero);
