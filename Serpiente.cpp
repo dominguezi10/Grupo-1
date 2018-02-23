@@ -1,7 +1,7 @@
 
 #include "Serpiente.h"
 #include <iostream>
-#include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -56,6 +56,15 @@ void Serpiente:: setPuntuacion(int puntuacion){
 
     this->puntuacion=puntuacion;
 
+}
+
+//anadir al vector
+void Serpiente:: anidarPosicion(int puntoX, int puntoY){
+	stringstream lasPosiciones;
+	lasPosiciones << puntoX<< "-"<<puntoY;
+	string cadena;
+	getline(lasPosiciones, cadena);
+	posiciones.push_back(cadena);
 }
 
 Serpiente::~Serpiente(){
