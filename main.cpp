@@ -8,6 +8,29 @@
 #include <sstream>
 
 using namespace std;
+
+//prototipo 
+int posicionesPuntoRojo();
+
+// crear maatriz
+string** provisionarMatriz(int);
+
+//liberar matriz
+void liberarMatriz(string**&, int);
+
+//evaluar
+int evaluarMatriz(string**, int);
+
+
+//imprimir
+string impresion(string** , int);
+
+//llenar
+void llenar(string**&,int , int );
+
+//---------------------------------------
+
+
 /*DEL EJEMPLO CON INPUT*/
 void strat_ncurses(bool useRaw,bool usenoECho);
 void printMenu(WINDOW * menu,string choices[],int size,int highlight);
@@ -15,6 +38,32 @@ void printMenu(WINDOW * menu,string choices[],int size,int highlight);
 void imprimirmenu(string,int);
 int movimientos(int,int);
 int main(int argc,char** argv){
+	string** matriz;
+	int condicion = 0;
+	int puntoX = 0;
+	int puntoY = 0;
+	matriz = provisionarMatriz(10);
+	puntoX = posicionesPuntoRojo();
+	puntoY = posicionesPuntoRojo();
+	llenar(matriz,puntoX, puntoY);
+
+	string tablero;
+	tablero = impresion(matriz, 10);
+
+
+	for(int i = 0; i<10; i++){
+		for(int j=0; j<10; j++){
+			matriz[i][j] = " ";
+		}
+		puntoX = posicionesPuntoRojo();
+		puntoY = posicionesPuntoRojo(); 
+
+	}
+
+	matriz[puntoX][puntoY] = "*";
+
+	////////////////
+
 	initscr();
 	cbreak();
 	string Nombre;
@@ -64,6 +113,9 @@ int main(int argc,char** argv){
 	}//Fin del while
 	getch();
 	endwin();
+
+	//liberar matriz
+	liberarMatriz(matriz, 10);
 	return 0;
 }//Fin del main,
 
@@ -93,7 +145,93 @@ void imprimirmenu(string nombre, int movimiento){
 	wrefresh(tablero);
 	wrefresh(puntuacion);
 }
+<<<<<<< HEAD
 int movimientos(int m,int Resp){
+=======
+
+//-------------------------------
+
+int posicionesPuntoRojo(){
+	int posicion = 0;
+	posicion = rand()%9;
+
+	return posicion;
+}
+
+//provisionar matriz  size x size
+string** provisionarMatriz(int size){
+	string** retValue = new string*[size];
+	
+	for(int i =0; i<size; i++){
+		retValue[i] = new string[size];
+
+	}
+
+
+	return retValue;
+
+}// fin del metodo provicionar matriz
+
+void liberarMatriz(string**& matriz, int size){
+	for(int i = 0; i<size; i++){
+		delete[] matriz[i];// sin los corchetes solo se  borra la 1era casilla
+		matriz[i] = NULL;
+	}// fin del for
+
+	cout<< "Liberado"<< endl;
+	delete[] matriz;
+	matriz = NULL;
+}// fin del metodo
+
+//evaluar matriz
+int evaluarMatriz(string** matriz, int size){
+	int contador =0;
+	for(int i =0; i<size; i++){
+		for(int j =0; j<size; j++){
+			if(matriz[i][j] != " "){
+				contador++;	
+			}
+
+		}
+
+	}
+
+	return contador;
+}// fin de evaluar
+
+
+string impresion(string** matriz,int size){
+	stringstream salida;
+	for(int i =0; i<size; i++){
+		for(int j =0; j<size; j++){
+			salida<< matriz[i][j];
+
+		}
+		salida<< "\n";
+
+	}
+	
+	string totalSalida;
+	getline(salida, totalSalida);
+	return salida.str();
+}
+
+//lenar
+void llenar(string**& matriz, int puntoX, int puntoY){
+	for(int i = 0; i<10; i++){
+		for(int j=0; j<10; j++){
+			matriz[i][j] = " ";
+		}
+	}
+	matriz[puntoX][puntoY] = "*";
+}
+
+//-----------------------
+
+
+
+/*movimientos(int m,int Resp){
+>>>>>>> edf46cd34477babe289e8689d2652367608f11dd
 	switch(Resp){
 		case 'w':{
 			mvprintw(0,0,"A");
