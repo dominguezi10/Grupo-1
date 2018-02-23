@@ -37,7 +37,8 @@ class Serpiente{
         void setMovimientos(int);
         int getPuntuacion();
         void setPuntuacion(int);
-
+	vector <string> getVector();
+	void setVector(vector <string>);
 	//metodos administrativo
 	void anidarPosicion(int, int);
 	

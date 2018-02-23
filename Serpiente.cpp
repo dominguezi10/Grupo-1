@@ -67,6 +67,15 @@ void Serpiente:: anidarPosicion(int puntoX, int puntoY){
 	posiciones.push_back(cadena);
 }
 
+vector <string> Serpiente::getVector(){
+	return posiciones;
+}
+
+
+void Serpiente::setVector(vector <string> nuevo){
+	this-> posiciones= nuevo;
+}
+
 Serpiente::~Serpiente(){
 
     cout<<"La instancia de Serpiente fue eliminada";

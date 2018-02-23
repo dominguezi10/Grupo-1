@@ -30,6 +30,8 @@ void llenar(string**&,int , int );
 
 //---------------------------------------
 
+int mover(int,int,string**&,Serpiente *);
+int crecer(string**&, int, int, int);
 
 /*DEL EJEMPLO CON INPUT*/
 void strat_ncurses(bool useRaw,bool usenoECho);
@@ -63,8 +65,6 @@ int main(int argc,char** argv){
 
 	matriz[puntoX][puntoY] = "*";
 
-	////////////////
-
 	initscr();
 	cbreak();
 	string Nombre;
@@ -83,6 +83,7 @@ int main(int argc,char** argv){
 	noecho();
 	
 	clear();
+	int gano;
 	int Resp=0;
 	int m_viejo=0;
 	int mov_actual=0;
@@ -107,16 +108,22 @@ int main(int argc,char** argv){
 			m_viejo=mov_actual;
 			mov_actual=movimientos(movimiento,Resp);
 			if(mov_actual==-1){
-				mov_actual=m_viejo;
-			
+				mov_actual=m_viejo;			
 			}else{
+				gano=mover(gusano.size(),mov_actual,matriz,snake);
 				movimiento++;
 		}
-			
 			//movimiento=movimientos(movimiento,Resp);
 		}else{
 			imprimirmenu(Nombre,movimiento,tablero);
 		}
+		if(gano==-1){
+			mvprintw(0,0,"OH NO! PERDIO");
+			break;
+		}else{
+			imprimirmenu(Nombre,movimiento,tablero);
+		}
+
 	}//Fin del while
 	getch();
 	endwin();
@@ -144,7 +151,7 @@ void imprimirmenu(string nombre, int movimiento,string snake){
 	mvwprintw(tablero,3,3,"MOVIMIENTOS");
 	mvwprintw(puntuacion,1,1,snake.c_str());
 	//mvwprintw(tablero,3,10,"%",c);
-	mvwprintw(tablero,4,1,mvs.c_str());
+	mvwprintw(tablero,4,4,mvs.c_str());
 	wrefresh(tablero);
 	wrefresh(tablero);
 	box(puntuacion,0,0);
@@ -259,6 +266,77 @@ void llenar(string**& matriz, int puntoX, int puntoY){
 	}
 	matriz[puntoX][puntoY] = "*";
 }
+	
+int mover(int size,int direccion,string**& Matriz,Serpiente * snake){
+	vector <string> pos=snake->getVector();
+	vector <string> Nuevo;
+	string x=pos[0].at(0)+"";
+	string y=pos[0].at(2)+""; 
+	int X=atoi(x.c_str());
+	int Y=atoi(y.c_str());
+	if (crecer(Matriz,X,Y,direccion)!=-1){
+		if(direccion==2){//arriba
+				for(int i=0; i<size-1;i++){
+					Matriz[X][Y+i]="G";
+				}
+				return 0;
+			}else if(direccion==1){//abajo
+				for(int i=0; i<size-1;i++){
+					Matriz[X][Y-i]="G";
+				}
+				return 0;
+			}else if(direccion==4){//izq
+				for(int i=0; i<size-1;i++){
+					Matriz[X-i][Y]="G";
+				}
+				return 0;
+			}else if(direccion==3){//derecha
+				for(int i=0; i<size-1;i++){
+					Matriz[X+i][Y]="G";
+				}
+			return 0;
+		}			
+	}else{
+		return -1;
+	}//del if
+}//fin dle metodo
+
+
+//crece
+
+int crecer(string**& matriz, int posX, int posY, int direccion){
+	//int error = 0;
+	switch(direccion){
+		case 1:
+			{
+			if((posY-1)<0 ){
+				return -1;
+			}	
+				break;
+			}			
+		case 2:{
+			if((posY+1)>9 ){
+				return -1;
+			}
+			break;
+			}
+		case 3:{
+			if((posX-1)<0){
+				return -1;
+			}
+			
+			break;}
+
+		case 4:{
+			if((posX+1)>9){
+				return -1;
+			}
+		break;}
+	}
+	
+}
+
+// metodo crecer
 
 //-----------------------
 
