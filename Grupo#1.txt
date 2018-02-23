@@ -5,4 +5,4 @@ Nombres:
 #Cuenta Claudia: 11711357
 Usuario Git (Ingrid): dominguezi10
 Usuario Git (Claudia): hikarisaotom
-Repositorio: https://github.com/hikarisaotom/P3Examen-1_ClaudiaCortes_IngridDominguez
+Repositorio: https://github.com/dominguezi10/Grupo-1/settings/collaboration

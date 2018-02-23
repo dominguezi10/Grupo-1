@@ -1,5 +1,8 @@
-all: main
+all: main 
 
-main: main.cpp
-	g++  main.cpp -lncurses
+Serpiente: Serpiente.cpp Serpiente.h
+	g++ -c Serpiente.cpp
+
+main: main.cpp Serpiente.h
+	g++  main.cpp Serpiente.cpp -lncurses
 	
