@@ -1,5 +1,6 @@
 //Bienvenido
 #include <string>
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -17,6 +18,7 @@ class Serpiente{
         int pixelesComidos;
         int movimientos;
         int puntuacion;
+	vector<string> posiciones;
 
 
     //metodos publicos
@@ -35,6 +37,10 @@ class Serpiente{
         void setMovimientos(int);
         int getPuntuacion();
         void setPuntuacion(int);
+
+	//metodos administrativo
+	void anidarPosicion(int, int);
+	
 
     //Destructor
     ~Serpiente();
